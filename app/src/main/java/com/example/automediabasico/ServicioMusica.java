@@ -148,17 +148,7 @@ public class ServicioMusica extends MediaBrowserService {
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mCurTrack = (mCurTrack < mMusic.size() - 1 ? mCurTrack + 1 : 0);
                 mCurrentTrack = mMusic.get(mCurTrack);
-                mPlayer.seekTo(0);
-                mSession.setPlaybackState(buildState(PlaybackState.STATE_PLAYING));
-                mSession.setMetadata(mCurrentTrack);
-                try {
-                    mediaPlayer.reset();
-                    mediaPlayer.setDataSource(ServicioMusica.this,
-                            Uri.parse(mCurrentTrack.getDescription().getMediaId()));
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                handlePlay();
             }
         });
         mPlayer.prepareAsync();
